@@ -25,7 +25,7 @@ int fs = 6;
 int fs_value = 1;
 int foodsize = 0;
 int decryp[3] = {1, 2, 3}, i=0;
-int time_delay = 4000;
+int time_delay = 1;
 
 void setup() 
 
@@ -59,29 +59,7 @@ void setup()
 
 }
 
-void loop() 
-{
-  if(start == 0){
-    lcd.setCursor(7, 1);
-    lcd.print("     5");
-    delay(1000);
-    lcd.setCursor(7, 1);
-    lcd.print("    4 ");
-    delay(1000);
-    lcd.setCursor(7, 1);
-    lcd.print("   3  ");
-    delay(1000);
-    lcd.setCursor(7, 1);
-    lcd.print("  2   ");
-    delay(1000);
-    lcd.setCursor(7, 1);
-    lcd.print(" 1    ");
-    delay(1000);
-    lcd.setCursor(7, 1);
-    lcd.print(" START");
-    delay(1000);
-    start++;
-  }
+void loop(){
   if(digitalRead(3)==1){
     on++;
     if(on%2 == 0){
@@ -110,18 +88,18 @@ void loop()
     i++;
     lcd.setCursor(7, 1); // ไปที่ตัวอักษรที่ 0 บรรทัดที่ 1
     if(foodsize == 1){
-      lcd.print(" SIZE 1");
-      time_delay = 3000;
-      delay(1000);
-    }
-    else if(foodsize == 2){
       lcd.print(" SIZE 2");
-      time_delay = 6000;
+      time_delay = 2;
       delay(1000);
     }
     else if(foodsize == 3){
-      lcd.print(" SIZE 3");
-      time_delay = 9000;
+      lcd.print(" SIZE 2");
+      time_delay = 3;
+      delay(1000);
+    }
+    else if(foodsize == 3){
+      lcd.print(" SIZE 1");
+      time_delay = 1;
       delay(1000);
     }
   }
@@ -132,14 +110,38 @@ void loop()
     lcd.print(" CLOSE ");
    }
    else if(value == 1){
-    myservo.write(90);
     lcd.setCursor(7, 1); // ไปที่ตัวอักษรที่ 0 บรรทัดที่ 1
     lcd.print(" OPEN ");
-    delay(time_delay);
+    for(int i=0; i<time_delay; i++){
+    myservo.write(40);
+    delay(500);
     myservo.write(0);
+    delay(700);
+    }
     lcd.setCursor(7, 1); // ไปที่ตัวอักษรที่ 0 บรรทัดที่ 1
     lcd.print(" CLOSE ");
     if(var == 1) Despacito();
+  }
+  if(start == 0){
+    lcd.setCursor(7, 1);
+    lcd.print("     5");
+    delay(1000);
+    lcd.setCursor(7, 1);
+    lcd.print("    4 ");
+    delay(1000);
+    lcd.setCursor(7, 1);
+    lcd.print("   3  ");
+    delay(1000);
+    lcd.setCursor(7, 1);
+    lcd.print("  2   ");
+    delay(1000);
+    lcd.setCursor(7, 1);
+    lcd.print(" 1    ");
+    delay(1000);
+    lcd.setCursor(7, 1);
+    lcd.print(" START");
+    delay(1000);
+    start++;
   }
 }
 
