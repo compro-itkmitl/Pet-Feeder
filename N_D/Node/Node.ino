@@ -8,6 +8,7 @@ int hr_m = 99, mint_m = 99, hr_n = 99, mint_n = 99;
 
 const int pingPin = D1;
 int inPin = D2;//อัลต้าโซนิค
+
 int count_dogeat = 0;
 
 char auth[] = "2ae4032458ec496e87333ff98fb0a775";//blynk key
@@ -37,8 +38,10 @@ BLYNK_WRITE(V2) {
 }
 
 void setup() {
-  pinMode(D4, OUTPUT);
-  
+  pinMode(D4, OUTPUT);//goto uno
+
+  pinMode(D5, OUTPUT);//mute music by untrasonic goto uno
+
   Blynk.begin(auth, "AndroidAP", "55667744");
   Serial.begin(115200);
   
@@ -85,13 +88,24 @@ void loop() {
     Serial.print(cm);
     Serial.println(" cm\n");
     delay(1000);
-    if(cm < 30){
+    if(cm < 30 && cm > 7){
       count_dogeat += 1;
       Serial.print("dog in: ");
       Serial.print(count_dogeat);
       Serial.print(" sec\n");
-      if(count_dogeat == 4){
+      if(count_dogeat == 3){
         Blynk.notify("Your dog is enjoy eating now!!!");
+      }
+    }
+    else if(cm <=10){
+      count_dogeat += 1;//count mute , unmute
+      Serial.print("sound: ");
+      Serial.print(count_dogeat);
+      Serial.print(" sec\n");
+      if(count_dogeat == 2){
+        digitalWrite(D5, HIGH);
+        delay(1000);
+        digitalWrite(D5, LOW);
       }
     }
     else count_dogeat = 0;
